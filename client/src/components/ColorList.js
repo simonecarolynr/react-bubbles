@@ -8,7 +8,6 @@ const initialColor = {
 };
 
 const ColorList = ({ colors, updateColors }) => {
-  console.log(axiosWithAuth)
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
@@ -19,19 +18,17 @@ const ColorList = ({ colors, updateColors }) => {
 
   const saveEdit = e => {
     e.preventDefault();
-    // Make a put request to save your updated color
-    // where is is saved right now?
 
-    axiosWithAuth
+    axiosWithAuth()
       .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, colorToEdit)
       .then(res => { 
-        // updateColors(res.data);
-        console.log(res)})
+        updateColors(res.data);
+        })
       .catch(res => console.log(res))
   };
 
   const deleteColor = color => {
-    axiosWithAuth
+    axiosWithAuth()
       .delete(`http://localhost:5000/api/colors/${color.id}`, color)
       .then(res => console.log(res))
       .catch(res => console.log(res))
@@ -43,7 +40,6 @@ const ColorList = ({ colors, updateColors }) => {
       <ul>
         {colors.map(color => (
           <li key={color.color} onClick={() => {
-            console.log(color)
             editColor(color)}}>
             <span>
               <span className="delete" onClick={e => {
